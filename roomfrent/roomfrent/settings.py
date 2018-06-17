@@ -25,7 +25,7 @@ SECRET_KEY = ')u^0xh3n^0fh_x0i%!j4#+d+_vqv31@@@b%&o@)rz2&hewmoka'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,7 +85,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'roomforrent',
-        'USER': 'admin',
+        'USER': 'root',
         'PASSWORD': 'M4ster@809',
         'HOST': 'localhost',
         'PORT': '',

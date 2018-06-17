@@ -1,38 +1,52 @@
+header {
+	position: absolute;
+	top:12px;
+	right:30px;
+}
 
-.login-page img {
-    width: 20%;
-    height: auto;
+header a:link, a:visited, a:active {
+    color: #2a2a2a;
+    font-family: arial, sans-serif;
+    font-size:12px;
+    text-decoration:none;
+	margin-right:5px;
+	margin-left:5px;
+	position:relative;
+	top:-10px;
+}
+
+header a:hover {
+	text-decoration:underline;
+}
+
+#products {
+	margin-right:8px;
+	margin-left:8px;
+}
+
+#bell {
+	margin-right:10px;
+	margin-left:8px;
+}
+
+#share {
+	margin-right:10px;
+	margin-left:10px;
+}
+
+#lara {
+	border-radius:50%;
+}
+
+div {
+	display:block;
+	margin: auto;
+	text-align:center;
+	padding-top: 14%;
 }
 .login-page {
-    padding: 0;
     text-align: center;
 }
-.search-bar input {
-    padding: 20px;
-    border: 2px solid #337ab7;
-}
-
-span.search-icon button {
-    position: relative;
-    /*right: 389px;*/
-    /*bottom: 48px;*/
-    padding: 10px 13px;
-    border-radius: 0;
-}
-.search-btn {
-    padding-top: 30px;
-}
-.search-btn button {
-    padding: 15px 40px;
-    width: 18%;
-}
-.search-btn button {
-    padding: 16px 0;
-    width: 15%;
-    font-weight: bold;
-    font-size: 20px;
-}
-
 .search {
 	width: 570px;
 	height: 28px;
@@ -116,4 +130,26 @@ input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration { display: none; }
 input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
 input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
