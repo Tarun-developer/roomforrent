@@ -1,0 +1,51 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <link href="{% static '/css/register.css' %} " rel="stylesheet" />
+  </head>
+  <body>
+    <div id="login-box">
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+          </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <form action="/owner/owner_register" method="POST">
+        {% csrf_token %}
+        <div class="left">
+          <h1>Sign up Or Login
+          </h1>
+          <input type="text" name="moblie" placeholder="Mobile Number" />
+          <input type="text" name="email" placeholder="E-mail" />
+          <input type="password" name="password" placeholder="Password" />
+          <input type="submit" class="sign_up" name="signup_submit" value="Sign me up" />
+        </div>
+      </form>
+      <form action="/owner/owner_register/" method="POST">
+        {% csrf_token %}
+        <div class="right">
+          <h1>Sign in
+          </h1>
+          <input type="text" name="moblie" placeholder="Mobile Number" />
+          <input type="password" name="password" placeholder="Password" />
+          <input type="hidden" name="islogin" value="true" />
+          <input type="submit" class="login_button" name="login_submit" value="Login" />
+        </div>
+      </form>
+      <div class="bottom">
+        <h3>Login with social media
+        </h3>
+        <button class="social-signin facebook">Log in with facebook
+        </button>
+        <button class="social-signin google">Log in with Google+
+        </button>
+      </div>
+      <div class="or">OR
+      </div>
+    </div>
+  </body>
+</html>

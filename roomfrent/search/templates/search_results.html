@@ -1,0 +1,391 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>RoomfRent</title>
+      <!-- Bootstrap -->
+      <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:100,200,300,400,500,700" rel="stylesheet">
+      <link href="{% static '/css/global/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static '/css/global/selectric.css' %}" rel="stylesheet">
+      <link href="{% static '/css/search/style.css' %}" rel="stylesheet">
+      <link href="{% static '/css/search/search_results.css' %}" rel="stylesheet">
+      <link href="{% static '/css/search/5star.css' %}" rel="stylesheet">
+      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"> -->
+
+
+      <script language="JavaScript" type="text/javascript" src="{% static '/js/global/jquery.min.js' %}"></script>
+    
+   </head>
+   <body>
+      <div id="main">
+         <nav class="navbar navbar-expand-lg navbar-dark" id="menu">
+            <div class="container">
+               <a class="navbar-brand" href="/dashboard/"><span class="icon-uilove icon-uilove-realestate"></span></a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu-content" aria-controls="menu-content" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="menu-content">
+                  <ul class="navbar-nav mr-auto">
+                     <li class="nav-item ">
+                        <a class="nav-link" href="/dashboard/">
+                        Home <span class="sr-only">(current)</span>
+                        </a>
+                    
+                     </li>
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Listner
+                        </a>
+                        <div class="dropdown-menu"> <a href="property_listing.html" class="dropdown-item">List View</a>
+                        </div>
+                     </li>
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Owner
+                        </a>
+                        <div class="dropdown-menu"> <a href="agent_list.html" class="dropdown-item">Owner List</a>
+                           <a href="agent.html" class="dropdown-item">Owner Profile</a>
+                        </div>
+                     </li>
+                  </ul>
+                  <ul class="navbar-nav ml-auto">
+                     <li class="nav-item dropdown user-account">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="user-image" style="background-image:url(' img/demo/profile3.jpg');"></span> Hi, Tarun</a>
+                        <div class="dropdown-menu"> <a href="/owner/" class="dropdown-item">My Profile</a>
+                           <a href="my_password.html" class="dropdown-item">Change Password</a>
+                           <a href="my_notifications.html" class="dropdown-item">Notifications</a>
+                           <a href="my_membership.html" class="dropdown-item">Membership</a>
+                           <a href="my_payments.html" class="dropdown-item">Payments</a>
+                           <a href="my_account.html" class="dropdown-item">Account</a>
+                        </div>
+                     </li>
+                     <li class="nav-item"><a class="nav-link nav-btn" href="/owner/owner_add_property"><span><i class="fa fa-plus" aria-hidden="true"></i> Add listing</span></a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </nav>
+         <div class="container">
+            <div class="search-form">
+               <div class="card">
+                  <div class="row">
+                     <div class="col-lg-8">
+                        <div class="form-group">
+                           {% csrf_token %}
+                        <input type="hidden" id="search_value" name="search_value" value="{{ search_result }}"> 
+                           <input type="text" id="pac-input" value="" class="form-control form-control-lg" required placeholder="eg.Mohali">
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="row">
+                           <div class="form-group">
+                              <button type="button"  id="search" name="search" class="btn btn-lg btn-primary btn-block">Search</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+                                  <div id="loader">
+<div id="shadow" class="loadershadow"></div>
+  <div id="box" class="loader_box"></div>
+</div>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+         </div>
+         <div class="container">
+            <div class="row justify-content-md-center">
+               <div class="col col-lg-12 col-xl-10">
+                  
+                  <div class="page-header">
+                     <h1 class="heading_result"> </h1>
+                  </div>
+               </div>
+            </div>
+         </div>
+  
+         <div id="content">
+            <div class="container">
+
+               <div class="row justify-content-md-center">
+                  <div class="col col-lg-12 col-xl-10">
+                     <div class="row has-sidebar">
+                        <div class="col-md-4 col-lg-3">
+                           <button id="toggle-filters" class="btn btn-primary btn-circle mobile-filter"><i class="fa fa-filter"></i>
+                           </button>
+                           <div id="sidebar" class="sidebar-left">
+                              <button class="close-panel btn btn-white"><i class="fa fa-long-arrow-left"></i>
+                              </button>
+                              <div class="sidebar_inner">
+                                 <div id="filters">
+                                    <div class="card">
+                                       <div class="card-header">
+                                          <h4 class="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion" href="#p_budget" aria-expanded="true" aria-controls="p_type"> Budget <i class="fa fa-caret-down float-right"></i> </a> </h4>
+                                       </div>
+                                       <div id="p_budget" class="panel-collapse collapse" role="tabpanel">
+                                          <div class="card-body">
+                                             <div class="row">
+                                                <div class="col-md-6">
+                                                   <div class="form-group">
+                                                      <input type="text" class="form-control input-sm" placeholder="Min">
+                                                   </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                   <div class="form-group">
+                                                      <input type="text" class="form-control input-sm" placeholder="Max">
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="card">
+                                       <div class="card-header">
+                                          <h4 class="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion" href="#p_type" aria-expanded="true" aria-controls="p_type"> Property Type <i class="fa fa-caret-down float-right"></i> </a> </h4>
+                                       </div>
+                                       <div id="p_type" class="panel-collapse collapse show" role="tabpanel">
+                                          <div class="card-body">
+                                             <div class="checkbox ">
+                                                <input type="checkbox" value="1" id="house">
+                                                <label for="house">House</label>
+                                             </div>
+                                             <div class="checkbox ">
+                                                <input type="checkbox" value="1" id="flat">
+                                                <label for="flat">Flat</label>
+                                             </div>
+                                             <div class="checkbox ">
+                                                <input type="checkbox" value="1" id="appartment">
+                                                <label for="appartment">Appartment</label>
+                                             </div>
+                                             <div class="checkbox ">
+                                                <input type="checkbox" value="1" id="farms">
+                                                <label for="farms">Farms/Lands</label>
+                                             </div>
+                                             <div class="checkbox ">
+                                                <input type="checkbox" value="1" id="room">
+                                                <label for="room">Room</label>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="card">
+                                       <div class="card-header">
+                                          <h4 class="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion" href="#p_features" aria-expanded="true" aria-controls="p_features"> Features <i class="fa fa-caret-down float-right"></i> </a> </h4>
+                                       </div>
+                                       <div id="p_features" class="panel-collapse collapse show" role="tabpanel">
+                                          <div class="card-body">
+                                             <div class="checkbox">
+                                                <input type="checkbox" value="" id="garden">
+                                                <label for="garden">Garden</label>
+                                             </div>
+                                             <div class="checkbox">
+                                                <input type="checkbox" value="" id="parking">
+                                                <label for="parking">Parking</label>
+                                             </div>
+                                             <div class="checkbox">
+                                                <input type="checkbox" value="" id="fireplace">
+                                                <label for="fireplace">Fireplace</label>
+                                             </div>
+                                             <div class="checkbox">
+                                                <input type="checkbox" value="" id="restaurant">
+                                                <label for="restaurant">Restaurant</label>
+                                             </div>
+                                             <div class="checkbox">
+                                                <input type="checkbox" value="" id="school">
+                                                <label for="school">School</label>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-8 col-lg-9">
+                           <div class="sorting">
+                              <div class="row justify-content-between">
+                                 <div class="col-sm-5 col-md-5 col-lg-4 col-xl-3">
+                                    <div class="form-group">
+                                       <select class="form-control ui-select">
+                                          <option selected="selected">Most recent</option>
+                                          <option>Highest price</option>
+                                          <option>Lowest price</option>
+                                          <option>Most reduced</option>
+                                          <option>Most popular</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                                    <div class="btn-group float-right" role="group"> <a href="property_grid.html" class="btn btn-light"><i class="fa fa-th"></i></a>  <a href="property_listing.html" class="btn btn-light active"><i class="fa fa-bars"></i></a> 
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="clearfix"></div>
+                           <div class="item-listing list append_properity" id="append_properity">
+                           </div>
+                        </div>
+                     </div>
+                     <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                           <li class="page-item"><a class="page-link" href="#">&laquo;</a>
+                           </li>
+                           <li class="page-item active"><a class="page-link" href="#">1</a>
+                           </li>
+                           <li class="page-item"><a class="page-link" href="#">2</a>
+                           </li>
+                           <li class="page-item"><a class="page-link" href="#">3</a>
+                           </li>
+                           <li class="page-item"><a class="page-link" href="#">&raquo;</a>
+                           </li>
+                        </ul>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      </div>
+      <!-- Contact Agent Modal -->
+      <div class="modal fade  item-badge-rightm" id="leadform" tabindex="-1" role="dialog">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <div class="media">
+                     <div class="media-left">
+                        <a href="property_single.html">
+                        <img src="img/demo/property/1.jpg" class="img-rounded" width="64" alt="">
+                        </a>
+                     </div>
+                     <div class="media-body">
+                        <h4 class="media-heading">Send Message for<br>
+                           <small><a href="property_single.html">3 bed semi-detached house for sale</a></small>
+                        </h4>
+                        <ul class="list-unstyled">
+                           <li><i class="fa fa-map-marker"></i> Kirkstone Road, Middlesbrough TS3</li>
+                           <li><a href="tel:01502392905"><i class="fa fa-phone fa-fw" aria-hidden="true"></i> Call: 01502 392905</a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <form>
+                     <div class="form-group">
+                        <label for="lead_name">Your Name</label>
+                        <input type="text" class="form-control" id="lead_name" placeholder="Your Name">
+                     </div>
+                     <div class="form-group">
+                        <label for="lead_email">Your Email</label>
+                        <input type="email" class="form-control" id="lead_email" placeholder="Your Email">
+                     </div>
+                     <div class="form-group">
+                        <label for="lead_phone">Your Telephone</label>
+                        <input type="tel" class="form-control" id="lead_phone" placeholder="Your Telephone">
+                     </div>
+                     <div class="form-group">
+                        <label for="lead_message">Message</label>
+                        <textarea rows="4" class="form-control" id="lead_message" placeholder="Please include any useful details, i.e. current status, availability for viewings, etc."></textarea>
+                     </div>
+                  </form>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary">Send Message</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <button class="btn btn-primary btn-circle" id="to-top"><i class="fa fa-angle-up"></i>
+      </button>
+      <footer id="footer" class="bg-light footer-light"></footer>
+      </div>
+      <script src="{% static 'js/search/scripts.js' %}"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC95eHImBVWI4SbTc3DD2zruYGcWdI6xD0&libraries=places&callback=initAutocomplete" async defer></script>
+      <script language="JavaScript" type="text/javascript" src="{% static '/js/global/bootstrap.min.js' %}"></script>
+       <script language="JavaScript" type="text/javascript" src="{% static '/js/global/jquery.sidr.min.js' %}"></script>
+      <script language="JavaScript" type="text/javascript" src="{% static '/js/dashboard/dashboard.js' %}"></script>
+      <script language="JavaScript" type="text/javascript" src="{% static '/js/search/search_templet.js' %}"></script>
+      <script>
+         $(document).ready(function() {
+                 $('#toggle-filters').sidr({
+                   side: 'left',
+                   displace : false,
+                   renaming : false,
+                   name: 'sidebar',
+                   source: function() {
+                     AOS.refresh();
+                   },
+                   
+                 });});
+      </script>
+      <script id="proerity_script" type="text/templet">
+         <div class="clone_html_properity ">
+           <div class="row">
+             <div class="col-lg-5">
+               <div class="item-image ">
+                 <a href="property_single.html">
+                   <img src="{% static '/images/no_image.jpg' %}" class="pro_image img-fluid" alt="">
+                   <div class="item-badges">
+                     <div class="item-badge-left ">Soon</div>
+                     <div class="item-badge-right">For Rent</div>
+                   </div>
+                   <div class="item-meta">
+                     <div class="item-price budget">$420,000
+                     </div>
+                   </div>
+                
+               </div>
+             </div>
+             <div class="col-lg-7">
+               <div class="item-info">
+                 <h3 class="item-title property_title"><a href="property_single.html"></a></h3>
+                 <div class="item-location location"></div><span class="distance"> </span>
+              
+                 <div class="item-details">
+                   <ul>
+                     <li>Furnished
+                     </li>
+                   </ul>
+                 </div>
+               </div>
+               <div class="row">
+                 <div class="col-md-6">
+                   <div class="added-on">Listed on 19th Feb 2017</div>
+                 </div>
+                 <div class="owner" class="col-md-6"> <a href="#" class="added-by">by Unnamed Owner</a>
+                 </div>
+               <div class="owner_mobile" class="col-md-6"> <a href="#" class="added-by"></a>
+                 </div>
+
+               </div>
+             </div>
+
+  <div class="stars">
+    <form action="">
+      <input class="star star-5" id="star-5-2" type="radio" name="star"/>
+      <label class="star star-5" for="star-5-2"></label>
+      <input class="star star-4" id="star-4-2" type="radio" name="star"/>
+      <label class="star star-4" for="star-4-2"></label>
+      <input class="star star-3" id="star-3-2" type="radio" name="star"/>
+      <label class="star star-3" for="star-3-2"></label>
+      <input class="star star-2" id="star-2-2" type="radio" name="star"/>
+      <label class="star star-2" for="star-2-2"></label>
+      <input class="star star-1" id="star-1-2" type="radio" name="star"/>
+      <label class="star star-1" for="star-1-2"></label>
+    </form>
+  </div>
+           </div>
+
+         </div>
+      </script>
+
+   </body>
+</html>
