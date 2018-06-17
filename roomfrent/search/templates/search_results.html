@@ -5,6 +5,7 @@
       <meta charset="utf-8">
       <title>RoomfRent</title>
       <!-- Bootstrap -->
+       <link rel="icon" href="{% static 'images/fevi_icon_logo.ico' %}">
       <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:100,200,300,400,500,700" rel="stylesheet">
       <link href="{% static '/css/global/bootstrap.min.css' %}" rel="stylesheet">
       <link href="{% static '/css/global/selectric.css' %}" rel="stylesheet">
@@ -22,7 +23,7 @@
       <div id="main">
          <nav class="navbar navbar-expand-lg navbar-dark" id="menu">
             <div class="container">
-               <a class="navbar-brand" href="/dashboard/"><span class="icon-uilove icon-uilove-realestate"></span></a>
+               <a class="navbar-brand" href="/dashboard/"><span class="logo"><img src="{% static '/images/small_logo.webp' %}"/></span></a>
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu-content" aria-controls="menu-content" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
                </button>
                <div class="collapse navbar-collapse" id="menu-content">
