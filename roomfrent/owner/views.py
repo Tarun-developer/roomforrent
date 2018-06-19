@@ -90,8 +90,12 @@ class OwnerRegister(TemplateView):
                 user.save()
                 owner_register = OwnerInfo(user=user,owner_mobile=mobile)
                 owner_register.save()
-                return HttpResponseRedirect("/owner/owner_add_property/?own=" + str(user.id))
-                print (r)
+                user = authenticate(username=mobile, password=password)
+                if user is not None:
+                    if user.is_active:
+                        login(request, user)
+                        return HttpResponseRedirect("/owner/owner_add_property/?own=" + str(user.id))
+
 class OwnerAddProperty(LoggedInMixin,TemplateView):
     template_name = "owner_add_property.html"
 
@@ -113,7 +117,13 @@ class OwnerAddProperty(LoggedInMixin,TemplateView):
             # if family[0]==2:
             #     pref_obj=Preference.objects.create(family=1,girls=1,bachelor=1)
             #     if family=='3':
+            # if property_status=='Furnished':
+            #     pref_obj=Preference.objects.create(family=1)
+            # if property_status=='Furnished':
+            #     pref_obj=Preference.objects.create(girls=1)
+            # if property_status=='Furnished':
             pref_obj=Preference.objects.create(bachelor=1)
+       
             bachelor = request.POST.get('bachelor')
             girls = request.POST.get('girls')
             result_add_query = gmaps.places(loaction)

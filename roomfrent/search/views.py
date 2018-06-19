@@ -22,6 +22,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login,logout
 
 from . import models
+from search.models import *
 from passlib.hash import django_pbkdf2_sha256 as handler
 import pytz
 from random import randint
@@ -105,7 +106,7 @@ class SearchResults(TemplateView):
             json['budget']=str(i.budget)
             json['image']=str(i.image)
             json['location']=str(i.location)
-            json['owner']=str(i.owner.name)
+            json['owner']=str(i.owner.user)
             json['owner_mob']=str(i.owner.owner_mobile)
             json['furnish']=str(i.furnish_id)
 
