@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 class Furnish(models.Model):
 	fully = models.IntegerField(blank=True,null=True,default=0)
@@ -34,10 +34,8 @@ class Images(models.Model):
 		return str(self.name)
 		
 class OwnerInfo(models.Model):
-	name = models.CharField(max_length = 100)
-	owner_password = models.CharField(max_length = 200)
+	user = models.OneToOneField(User,on_delete=models.CASCADE)
 	owner_mobile = models.CharField(max_length = 10)
-	email = models.CharField(max_length = 100)
 	# propertie=models.ForeignKey(Property,on_delete=models.CASCADE,blank=True,null=True)
 
 	def __str__(self):

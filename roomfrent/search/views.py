@@ -20,6 +20,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 import json,pprint
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login,logout
 from . import models
 from passlib.hash import django_pbkdf2_sha256 as handler
 import pytz
@@ -28,6 +29,7 @@ import requests
 from django.db import connection
 from django.core import serializers
 import json
+
 # google map api
 import googlemaps
 from datetime import datetime
@@ -72,6 +74,10 @@ class SearchResults(TemplateView):
         # g = googlemap(search_result)
         # print nearby_place
         context['search_result'] = search_result
+       
+        # context['user'] = request.user.first_name
+        # else:
+            # context['user'] = "Guest"
         return context
     def post(self, request):
         # print request.POST

@@ -14,18 +14,19 @@
         {% endfor %}
       </ul>
       {% endif %}
-      <form action="/owner/owner_register" method="POST">
+      <form action="/owner/register" method="POST">
         {% csrf_token %}
         <div class="left">
           <h1>Sign up Or Login
           </h1>
-          <input type="text" name="moblie" placeholder="Mobile Number" />
-          <input type="text" name="email" placeholder="E-mail" />
+          <input type="text" name="first_name" placeholder="Name" />
+          <input type="text" pattern="[0-9]{5}[-][0-9]{7}[-][0-9]{1}" name="moblie" placeholder="Mobile Number" />
+          <input type="text" pattern="[^ @]*@[^ @]*" name="email" placeholder="E-mail" />
           <input type="password" name="password" placeholder="Password" />
           <input type="submit" class="sign_up" name="signup_submit" value="Sign me up" />
         </div>
       </form>
-      <form action="/owner/owner_register/" method="POST">
+      <form action="/owner/register/" method="POST">
         {% csrf_token %}
         <div class="right">
           <h1>Sign in
