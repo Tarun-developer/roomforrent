@@ -35,6 +35,8 @@ class OwnerProfile(LoggedInMixin,TemplateView):
 
     def get_context_data(self, * args, ** kwargs):
         context = super(OwnerProfile, self).get_context_data()
+        
+
         return context
 
 class OwnerProperty(LoggedInMixin,TemplateView):
@@ -42,6 +44,11 @@ class OwnerProperty(LoggedInMixin,TemplateView):
 
     def get_context_data(self, * args, ** kwargs):
         context = super(OwnerProperty, self).get_context_data()
+        owner=self.request.user.id
+        all_prop=list(Property.objects.filter(owner_id=(owner)))
+        context['propertys'] = all_prop
+
+
         return context
 
 class OwnerRegister(TemplateView):

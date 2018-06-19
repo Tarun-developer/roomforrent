@@ -9,6 +9,7 @@
       <h1 class="page-header">Submit your property</h1>
       <div class="form-container">
          <form action="/owner/owner_add_property" method="POST">
+                {% csrf_token %}
             <input id='step2' type='checkbox'>
             <input id='step3' type='checkbox'>
             <div id="part1" class="form-group">
@@ -177,7 +178,7 @@
          </form>
       </div>
 
-               
+
             </div>
          </div>
       </div>
