@@ -7,7 +7,6 @@ from datetime import datetime
 from datetime import timedelta
 from django.conf import settings
 from django.contrib import messages
-# from django.contrib.gis.geoip2 import GeoIP2
 from django.db.models import Q
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -21,6 +20,7 @@ from django.views.generic import TemplateView
 import json,pprint
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login,logout
+
 from . import models
 from passlib.hash import django_pbkdf2_sha256 as handler
 import pytz
@@ -74,10 +74,10 @@ class SearchResults(TemplateView):
         # g = googlemap(search_result)
         # print nearby_place
         context['search_result'] = search_result
-       
-        # context['user'] = request.user.first_name
-        # else:
-            # context['user'] = "Guest"
+        if self.request.user.is_anonymous:
+            context['user'] = "Guest"
+        else:
+            context['user'] = self.request.user.first_name
         return context
     def post(self, request):
         # print request.POST

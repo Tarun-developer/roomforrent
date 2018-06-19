@@ -107,15 +107,17 @@ class OwnerAddProperty(LoggedInMixin,TemplateView):
             price = request.POST.get('price')
             city = request.POST.get('city')
             family = request.POST.getlist('checks[]')
+            # print(family)
             # if family[0]==1:
             #     pref_obj=Preference.objects.create(family=1,girls=1,bachelor=1)
             # if family[0]==2:
             #     pref_obj=Preference.objects.create(family=1,girls=1,bachelor=1)
             #     if family=='3':
-            #         pref_obj=Preference.objects.create(bachelor=1)
+            pref_obj=Preference.objects.create(bachelor=1)
             bachelor = request.POST.get('bachelor')
             girls = request.POST.get('girls')
             result_add_query = gmaps.places(loaction)
+            print(request.user.id)
             lat=result_add_query['results'][0]['geometry']['location']['lat']
             lng=result_add_query['results'][0]['geometry']['location']['lng']
             if property_status=='Furnished':
