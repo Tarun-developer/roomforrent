@@ -1,1 +1,3 @@
 sudo apt-get install python-psycopg2 python-mysqldb
+apt-get install libmysqlclient-dev
+pip install mysqlclient
